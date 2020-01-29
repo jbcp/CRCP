@@ -1,5 +1,5 @@
 # CRCP
-Clinical Research Chain Platform
+Clinical Research Chain Platform on developing
 
 ## 요약
 + 임상시험 동의서 일부의 내용을 블록체인에 저장하고 공유
