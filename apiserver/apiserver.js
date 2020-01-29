@@ -86,16 +86,12 @@ app.post('/api/consent', async function (req, res) {
                 const network = await gateway.getNetwork('mychannel');
                 // Get the contract from the network.
                 const contract = network.getContract('fabcar');
-                // Submit the specified transaction.
-                // createCar transaction - requires 5 argument, ex: ('createCar', 'CAR12', 'Honda', 'Accord', 'Black', 'Tom')
-                // changeCarOwner transaction - requires 2 args , ex: ('changeCarOwner', 'CAR10', 'Dave')
+
                await contract.submitTransaction('createSubject', subjectName, "", "전북대", req.body.consent, "","", subjects_sign_dt, req.body.iv,"", "동의");
                // await contract.submitTransaction('createSubject',subjectName, userName);
                 console.log('Transaction has been submitted');
 
-                //await contract.submitTransaction('agreeConsent', req.params.subject_index, req.body.site, req.body.study, req.body.consent_ver, req.body.subject_sign, req.body.investigator, req.body.iv_sign_dt, req.body.classification);
-             //   var subject = Subject{Name: args[1], Site: args[2], Study: args[3], ConsentVer: args[4], DosageDT: args[5], SubjectSign: args[6], Investigator: args[7], IvSignDT: args[8], Classification: args[9]}
-
+       
                // res.send('Transaction has been submitted');
                 res.header("Access-Control-Allow-Origin", "*"); res.header("Access-Control-Allow-Headers", "X-Requested-With");
                 res.status(200).json({ response: { result: 'ok' } });
@@ -131,9 +127,7 @@ app.get('/api/queryallsubjects', async function (req, res) {
                 const network = await gateway.getNetwork('mychannel');
                 // Get the contract from the network.
                 const contract = network.getContract('fabcar');
-                // Evaluate the specified transaction.
-                // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
-                // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
+
                 const result = await contract.evaluateTransaction('queryAllSubjects');
                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
                 res.status(200).json({ response: JSON.parse(result.toString()) });
@@ -143,40 +137,6 @@ app.get('/api/queryallsubjects', async function (req, res) {
                 process.exit(1);
         }
 });
-
-
-// app.get('/api/querysubject/:subject_index', async function (req, res) {
-//         try {
-//                 // Create a new file system based wallet for managing identities.
-//                 const walletPath = path.join(process.cwd(), 'wallet');
-//                 const wallet = new FileSystemWallet(walletPath);
-//                 console.log(`Wallet path: ${walletPath}`);
-//                 // Check to see if we've already enrolled the user.
-//                 const userExists = await wallet.exists('user1');
-//                 if (!userExists) {
-//                         console.log('An identity for the user "user1" does not exist in the wallet');
-//                         console.log('Run the registerUser.js application before retrying');
-//                         return;
-//                 }
-//                 // Create a new gateway for connecting to our peer node.
-//                 const gateway = new Gateway();
-//                 await gateway.connect(ccpPath, { wallet, identity: 'user1', discovery: { enabled: true, asLocalhost: true } });
-//                 // Get the network (channel) our contract is deployed to.
-//                 const network = await gateway.getNetwork('mychannel');
-//                 // Get the contract from the network.
-//                 const contract = network.getContract('fabcar');
-//                 // Evaluate the specified transaction.
-//                 // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
-//                 // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-//                 const result = await contract.evaluateTransaction('querySubject', req.params.subject_index);
-//                 console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
-//                 res.status(200).json({ response: JSON.parse(result.toString()) });
-//         } catch (error) {
-//                 console.error(`Failed to evaluate transaction: ${error}`);
-//                 res.status(500).json({ error: error });
-//                 process.exit(1);
-//         }
-// });
 
 
 app.post('/api/createsubject/', async function (req, res) {
