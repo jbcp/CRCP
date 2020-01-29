@@ -1,0 +1,68 @@
+<html>
+	<head>
+	</head>
+
+	<body>
+        <form action="/my-handling-form-page" method="post" id=form_info >
+            <h3>SITE 접수대 사용자 등록 권한 요청 v0.0.1</h3>
+            <div>
+                <label for="name">계정:</label>
+                <input type="text" id="admin_id" />
+            </div>
+            <div>
+                <label for="name">비밀번호:</label>
+                <input type="text" id="admin_pass" />
+            </div>
+            <!-- <div>
+                    <label for="name">역할:</label>
+                    <input type="text" id="role" /><br>
+                    (접수대=cleck, 연구자=iv)
+            </div> -->
+
+        </form>
+        <input type="button" id="button1" onclick="button1_click();" value="키요청" />
+        <script>
+        function button1_click() {
+
+            var input_ssn = document.getElementById("admin_id").value;
+            var input_admin_pass = document.getElementById("admin_pass").value;
+
+            var result = {
+                id: input_ssn,
+                
+                pass: input_admin_pass
+
+            }
+
+            alert("송신");
+            document.getElementById("resulr").outerHTML;
+
+            var xhr = new XMLHttpRequest();
+                xhr.onload = function() {
+                if (xhr.status === 200 || xhr.status === 201) {
+                    console.log('ok')
+                    console.log(xhr)
+                    console.log(xhr.responseText);
+                    var out = xhr.responseText
+                    document.getElementById("resulr").innerHTML = out
+
+                } else {
+                    console.log('error')
+                    console.error(xhr.responseText);
+                }
+                };
+                xhr.open('post', 'http://203.254143.167:8080/api/regist_site_admin');
+               // xhr.open('post', 'http://localhost:8001/api/regist_site_admin');
+                xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+                xhr.send(JSON.stringify(result)); // 데이터를 stringify해서 보냄
+        }
+        </script>
+
+        <h3>------</h3>
+        <div id='resulr'>
+            결과값
+
+        </div>
+
+	</body>
+</html>

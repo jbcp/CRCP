@@ -1,0 +1,60 @@
+<html>
+	<head>
+	</head>
+
+	<body>
+        <form action="/my-handling-form-page" method="post" id=form_info >
+            <h3>전북대학교 접수대 지원자 키 등록 테스트 v0.0.1</h3>
+            <div>
+                <label for="name">지원자 생년월일:</label>
+                <input type="text" id="ssn" />
+            </div>
+
+        </form>
+        <input type="button" id="button1" onclick="button1_click();" value="등록요청" />
+        <script>
+        function button1_click() {
+
+            // var send_name = document.getElementById("name").value;
+            var send_birth = document.getElementById("ssn").value;
+            // var send_hpname = document.getElementById("site").value;
+
+            var result = {
+                // name: send_name,
+                ssn: send_birth
+                // site: send_hpname
+
+            }
+
+            alert("송신");
+            document.getElementById("resulr").outerHTML;
+
+            var xhr = new XMLHttpRequest();
+                xhr.onload = function() {
+                if (xhr.status === 200 || xhr.status === 201) {
+                    console.log('ok')
+                    console.log(xhr)
+                    console.log(xhr.responseText);
+                    var out = xhr.responseText
+                    document.getElementById("resulr").innerHTML = out
+
+                } else {
+                    console.log('error')
+                    console.error(xhr.responseText);
+                }
+                };
+                xhr.open('post', 'http://203.254.143.167:8080/api/regist_subject');
+                //xhr.open('post', 'http://localhost:8001/api/regist_subject');
+                xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+                xhr.send(JSON.stringify(result)); // 데이터를 stringify해서 보냄
+        }
+        </script>
+
+
+        <div id='resulr'>
+            결과값
+
+        </div>
+
+	</body>
+</html>
